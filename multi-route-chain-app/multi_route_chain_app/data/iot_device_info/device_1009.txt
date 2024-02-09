@@ -1,0 +1,40 @@
+Device 1009 
+Commercial Kitchen Ventilation Monitoring System
+
+Overview
+Device 1009 is a ventilation monitoring system designed to track critical environmental parameters in commercial kitchen environments. It ensures proper operation of ventilation controls.
+
+Table of Contents
+1. Features
+2. Technical Specifications 
+3. Installation Guide
+4. Usage and Operation
+5. Maintenance
+6. Warranty  
+
+1. Features
+- Monitors temperature, humidity, airflow
+- Ensures ventilation system meets usage demands
+- Detects buildup of grease or particulates  
+- Wireless sensors for ease of install
+- Real-time alerts 
+
+2. Technical Specifications
+- Temperature Range: 0°C to 100°C
+- Humidity Range: 10% to 100% RH 
+- Airflow Range: 1 to 10 m/s
+- Wireless Range: Up to 100m
+
+3. Installation Guide
+- Position sensors in kitchen exhaust ducts  
+- Install grease sensor near fan units
+- Connect gateway to ventilation controls
+
+4. Usage and Operation
+- Dashboard tracks environment data
+- Validates proper airflow rates
+- Triggers fan speed increases if needed
+
+5. Maintenance
+- Clean sensors regularly 
+- Clear grease buildups

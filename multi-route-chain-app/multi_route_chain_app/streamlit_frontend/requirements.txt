@@ -1,0 +1,8 @@
+sqlalchemy==1.4.47
+langchain
+langchain_experimental
+PyAthena[SQLAlchemy]==2.25.2
+opensearch-py
+requests_aws4auth
+boto3
+streamlit

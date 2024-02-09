@@ -1,0 +1,22 @@
+*.swp
+package-lock.json
+.pytest_cache
+*.egg-info
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+ENV
+ENV/
+ENV.bak/
+
+# CDK Context & Staging files
+.cdk.staging/
+cdk.out/
+
+source.bat
+.vscode
+.vscode/

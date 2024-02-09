@@ -1,0 +1,37 @@
+Device 1002 Multi-Sensor Environmental Monitor Documentation 
+
+Overview
+Device 1002 is a high-precision multi-sensor monitor designed to track critical environmental conditions in indoor spaces.
+
+Table of Contents
+1. Features
+2. Technical Specifications
+3. Installation Guide 
+4. Maintenance and Troubleshooting
+5. Safety Guidelines
+6. Warranty and Support
+
+1. Features
+- Measures temperature, humidity, light, noise levels 
+- Advanced analytics and custom alert thresholds
+- Intuitive dashboard with real-time data visualization
+- Long-range connectivity up to 500m
+
+2. Technical Specifications
+- Temperature Range: -20°C to 120°C  
+- Humidity Range: 0% to 100% RH
+- Light Range: 0 to 100,000 lux
+- Noise Range: 30 to 120 dBA
+- Wireless Connectivity: Up to 500m 
+
+3. Installation Guide
+- Mount securely in representative location 
+- Connect to network and calibration
+
+4. Maintenance and Troubleshooting
+- Regularly inspect and clean sensor surfaces
+- Check connectivity and troubleshoot issues
+- Contact technical support as needed
+
+5. Safety Guidelines 
+- Handle with care and install securely
