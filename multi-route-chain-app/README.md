@@ -13,8 +13,8 @@ This repository helps to set up the multi-route chain app using [CDK](https://aw
 ## Setup
 
 ### Pre-requisites
-1. Enable models in Amazon Bedrock
-2. SES setup (verify email)
+1. [Enable models in Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html): for this use case, you need to enable Anthropic Claude V2 and Titan Embeddings models 
+2. [SES setup (verify email)](https://docs.aws.amazon.com/ses/latest/dg/setting-up.html)
 3. [Get started with CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html)
 4. [Install Docker](https://www.docker.com/get-started/). Because we are bundling Lambda functions when running CDK so we need to install Docker. Please see the blog post about [Building, bundling and deploying applications with the AWS CDK](https://aws.amazon.com/blogs/devops/building-apps-with-aws-cdk/)
 
