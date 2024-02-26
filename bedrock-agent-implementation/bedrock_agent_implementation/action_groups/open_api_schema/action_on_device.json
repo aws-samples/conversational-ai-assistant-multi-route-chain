@@ -1,0 +1,133 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "Action On Device API",
+		"version": "1.0.0",
+		"description": "APIs to perform different actions on the device"
+	},
+	"paths": {
+		"/start": {
+			"get": {
+				"summary": "start the device",
+				"description": "start a device specified by device ID.",
+				"operationId": "startdevice",
+				"parameters": [
+					{
+						"name": "device_id",
+						"in": "query",
+						"description": "The device id to specifiy the device to be started.",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK."
+					},
+					"400": {
+						"description": "Bad request. One or more required fields are missing or invalid."
+					},
+					"500": {
+						"description": "Internal server error.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/reboot": {
+			"get": {
+				"summary": "Reboot the device",
+				"description": "Reboot a device specified by device ID.",
+				"operationId": "rebootDevice",
+				"parameters": [
+					{
+						"name": "device_id",
+						"in": "query",
+						"description": "The device id to specifiy the device to be rebooted.",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK."
+					},
+					"400": {
+						"description": "Bad request. One or more required fields are missing or invalid."
+					},
+					"500": {
+						"description": "Internal server error.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/shutdown": {
+			"get": {
+				"summary": "Shutdown the device",
+				"description": "Shutdown a device specified by device ID.",
+				"operationId": "shutdownDevice",
+				"parameters": [
+					{
+						"name": "device_id",
+						"in": "query",
+						"description": "The device id to specifiy the device to be shut down.",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK."
+					},
+					"400": {
+						"description": "Bad request. One or more required fields are missing or invalid."
+					},
+					"500": {
+						"description": "Internal server error.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

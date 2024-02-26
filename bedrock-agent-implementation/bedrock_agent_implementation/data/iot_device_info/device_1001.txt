@@ -1,0 +1,37 @@
+Device 1001 Temperature, Humidity, and Air Quality Sensor Documentation
+
+Overview
+Device 1001 is an advanced sensor for monitoring temperature, humidity, and air quality levels. It provides real-time data and alerts to help maintain optimal environmental conditions.
+
+Table of Contents
+1. Features
+2. Technical Specifications 
+3. Installation Guide
+4. Maintenance and Troubleshooting
+5. Safety Guidelines
+6. Warranty and Support
+
+1. Features
+- Precise measurement of temperature, humidity, and VOCs
+- Customizable real-time alerts and notifications
+- Long-range connectivity up to 250m 
+- Intuitive dashboard and analytics
+
+2. Technical Specifications
+- Temperature Range: -30°C to 100°C
+- Humidity Range: 0% to 100% RH  
+- VOC Range: 0 to 2000 ppm
+- Connectivity: Wireless, up to 250m
+
+3. Installation Guide 
+- Position sensor in representative location
+- Pair with monitoring system via Bluetooth/WiFi
+- Calibrate device to ensure accurate readings
+
+4. Maintenance and Troubleshooting
+- Regularly inspect and clean sensor surface
+- Check connectivity and replace battery if needed
+- Contact support if device malfunctions
+
+5. Safety Guidelines
+- Handle with care and avoid exposing to hazards

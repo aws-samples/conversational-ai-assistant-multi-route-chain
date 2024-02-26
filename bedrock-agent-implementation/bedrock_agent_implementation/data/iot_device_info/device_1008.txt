@@ -1,0 +1,40 @@
+Device 1008 Industrial Refrigeration Monitoring System
+
+Overview
+Device 1008 is an industrial-grade wireless sensor network designed to monitor critical environmental parameters in refrigerated warehouses or cold storage facilities.  
+
+Table of Contents 
+1. Features
+2. Technical Specifications
+3. Installation Guide
+4. Usage and Operation
+5. Maintenance
+6. Warranty 
+
+1. Features
+- Measures temperature, humidity, door open % 
+- Real-time alerts for out-of-range conditions
+- Wireless sensors with 10-year battery life  
+- Easy to expand modular design
+- Analytics and reports 
+
+2. Technical Specifications
+- Temperature Range: -40°C to 60°C  
+- Humidity Range: 0% to 100% RH condensing
+- Battery Life: 10 years (non-replaceable)
+- Wireless Range: Up to 200m
+
+3. Installation Guide
+- Position wireless sensors evenly in cold storage areas
+- Install door switch sensors on refrigeration units  
+- Connect gateway to control system  
+
+4. Usage and Operation
+- Dashboard shows real-time sensor data 
+- Set alerts for critical thresholds 
+- Generate temperature reports 
+
+5. Maintenance
+- Occasionally check sensors and clean as needed
+- Contact support for troubleshooting 
+
