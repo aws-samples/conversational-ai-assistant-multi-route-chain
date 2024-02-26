@@ -12,9 +12,9 @@ This folder contains the [Bedrock Agent and Knowledge Base](https://aws.amazon.c
 
 - **Conversational Interface**: Streamlit UI running on ECS provides a natural language interface for users to interact with and seek assistance in troubleshooting issues within a factory plant environment. 
 
-- **Bedrock Agent**: completes the user queries through series of reasoning steps and corresponding actions based on (ReAct prompting)[https://www.promptingguide.ai/techniques/react].
+- **Bedrock Agent**: completes the user queries through series of reasoning steps and corresponding actions based on [ReAct prompting](https://www.promptingguide.ai/techniques/react).
 
-- **Knowledge Base**: provide fully-managed (RAG)[https://www.promptingguide.ai/research/rag] to supply the agent with access to your data. In our use case, we have uploaded device specifications into an S3 bucket. It serves as the data source to the knowledge base.
+- **Knowledge Base**: provide fully-managed [RAG](https://www.promptingguide.ai/research/rag) to supply the agent with access to your data. In our use case, we have uploaded device specifications into an S3 bucket. It serves as the data source to the knowledge base.
 
 ## Setup
 
