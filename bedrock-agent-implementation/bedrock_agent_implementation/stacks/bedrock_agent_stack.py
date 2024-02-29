@@ -289,7 +289,7 @@ class BedrockAgentStack(Stack):
             id='BedrockKowledgeBase',
             role=custom_res_role,
             on_create=cr.AwsSdkCall(
-                service="bedrock-agent",
+                service="@aws-sdk/client-bedrock-agent",
                 action="createKnowledgeBase",
                 parameters={
                     "knowledgeBaseConfiguration": {
@@ -317,7 +317,7 @@ class BedrockAgentStack(Stack):
                 output_paths=["knowledgeBase.knowledgeBaseId"]
             ),
             on_delete=cr.AwsSdkCall(
-                service="bedrock-agent",
+                service="@aws-sdk/client-bedrock-agent",
                 action="deleteKnowledgeBase",
                 parameters={
                     "knowledgeBaseId": cr.PhysicalResourceIdReference(),
@@ -334,7 +334,7 @@ class BedrockAgentStack(Stack):
             id='BedrockDataSource',
             role=custom_res_role,
             on_create=cr.AwsSdkCall(
-                service="bedrock-agent",
+                service="@aws-sdk/client-bedrock-agent",
                 action="createDataSource",
                 parameters={
                     "knowledgeBaseId": knowledgebase_id,
@@ -359,7 +359,7 @@ class BedrockAgentStack(Stack):
             id='BedrockIngestion',
             role=custom_res_role,
             on_create=cr.AwsSdkCall(
-                service="bedrock-agent",
+                service="@aws-sdk/client-bedrock-agent",
                 action="startIngestionJob",
                 parameters={
                     "knowledgeBaseId": knowledgebase_id,
@@ -376,7 +376,7 @@ class BedrockAgentStack(Stack):
             id='BedrockAgent',
             role=custom_res_role,
             on_create=cr.AwsSdkCall(
-                service="bedrock-agent",
+                service="@aws-sdk/client-bedrock-agent",
                 action="createAgent",
                 parameters={
                     "agentName": BEDROCK_AGENT_NAME,
@@ -407,7 +407,7 @@ class BedrockAgentStack(Stack):
                 output_paths=["agent.agentId"]
             ),
             on_delete=cr.AwsSdkCall(
-                service="bedrock-agent",
+                service="@aws-sdk/client-bedrock-agent",
                 action="deleteAgent",
                 parameters={
                     "agentId": cr.PhysicalResourceIdReference(),
@@ -429,7 +429,7 @@ class BedrockAgentStack(Stack):
             id='BedrockAssociateKb',
             role=custom_res_role,
             on_create=cr.AwsSdkCall(
-                service="bedrock-agent",
+                service="@aws-sdk/client-bedrock-agent",
                 action="associateAgentKnowledgeBase",
                 parameters={
                     "agentId": agent_id,
@@ -506,7 +506,7 @@ class BedrockAgentStack(Stack):
             id='BedrockAgentActionGroup1',
             role=custom_res_role,
             on_create=cr.AwsSdkCall(
-                service="bedrock-agent",
+                service="@aws-sdk/client-bedrock-agent",
                 action="createAgentActionGroup",
                 parameters={
                     "agentId": agent_id,
@@ -536,7 +536,7 @@ class BedrockAgentStack(Stack):
             id='BedrockAgentActionGroup2',
             role=custom_res_role,
             on_create=cr.AwsSdkCall(
-                service="bedrock-agent",
+                service="@aws-sdk/client-bedrock-agent",
                 action="createAgentActionGroup",
                 parameters={
                     "agentId": agent_id,
@@ -567,7 +567,7 @@ class BedrockAgentStack(Stack):
             id='BedrockPrepareAgent',
             role=custom_res_role,
             on_create=cr.AwsSdkCall(
-                service="bedrock-agent",
+                service="@aws-sdk/client-bedrock-agent",
                 action="prepareAgent",
                 parameters={
                     "agentId": agent_id
@@ -586,7 +586,7 @@ class BedrockAgentStack(Stack):
             id='BedrockAgentAlias',
             role=custom_res_role,
             on_create=cr.AwsSdkCall(
-                service="bedrock-agent",
+                service="@aws-sdk/client-bedrock-agent",
                 action="createAgentAlias",
                 parameters={
                     "agentId": agent_id,

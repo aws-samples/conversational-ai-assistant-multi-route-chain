@@ -74,18 +74,9 @@ def on_create(event):
                         "type": "text",
                         "index": False
                     },
-                    "id": {
-                        "type": "text",
-                        "fields": {
-                        "keyword": {
-                            "type": "keyword",
-                            "ignore_above": 256
-                            }
-                        }
-                    },
                     f"{text_field}": {
                         "type": "text",
-                        "index": False
+                        "index": True
                     },
                     f"{vector_field_name}": {
                         "type": "knn_vector",

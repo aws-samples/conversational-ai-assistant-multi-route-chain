@@ -161,7 +161,7 @@ class BaseInfraStack(Stack):
 
         return AwsSdkCall(
             action='startCrawler',
-            service='glue',
+            service='@aws-sdk/client-glue',
             parameters=params,
             physical_resource_id=PhysicalResourceId.of(
                 f'StartCrawler-IotOpsGlueCrawler')
@@ -175,7 +175,7 @@ class BaseInfraStack(Stack):
 
         return AwsSdkCall(
             action='deleteDatabase',
-            service='glue',
+            service='@aws-sdk/client-glue',
             parameters=params,
             physical_resource_id=PhysicalResourceId.of(
                 f'DeleteDatabase-{athena_db}')
