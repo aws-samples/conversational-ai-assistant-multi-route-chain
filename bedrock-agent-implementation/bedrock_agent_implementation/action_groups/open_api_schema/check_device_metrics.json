@@ -1,0 +1,58 @@
+{
+	"openapi": "3.0.0",
+	"info": {
+		"title": "Device metrics API",
+		"version": "1.0.0",
+		"description": "APIs for connecting to Amazon Athena and check"
+	},
+	"paths": {
+		"/device_metrics": {
+			"get": {
+				"summary": "Get device metrics based on SQL query",
+				"description": "Get device metrics based on SQL query.",
+				"operationId": "getDeviceMetrics",
+				"parameters": [
+					{
+						"name": "sql_query",
+						"in": "query",
+						"description": "The SQL query to be executed.",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Get device metrics by SQL query",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad request. One or more required fields are missing or invalid."
+					},
+                    "500": {
+						"description": "Internal server error.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
