@@ -34,4 +34,4 @@ USER $USER
 
 EXPOSE 8501
 
-ENTRYPOINT ["streamlit", "run", "routing_chain_claude.py", "--server.port=8501", "--server.address=0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "routing_chain_claude_with_memory.py", "--server.port=8501", "--server.address=0.0.0.0"]

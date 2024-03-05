@@ -6,3 +6,6 @@ opensearch-py
 requests_aws4auth
 boto3
 streamlit
+langchain_community
+langchain_core
+langchain_openai
