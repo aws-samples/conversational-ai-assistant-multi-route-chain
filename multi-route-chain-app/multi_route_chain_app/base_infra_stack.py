@@ -7,7 +7,8 @@ from aws_cdk import (
     aws_s3 as s3,
     aws_s3_deployment as s3_deploy,
     aws_iam as iam,
-    aws_ec2 as ec2
+    aws_ec2 as ec2,
+    aws_dynamodb as dynamodb
 )
 
 dirname = os.path.dirname(__file__)
@@ -42,6 +43,18 @@ class BaseInfraStack(Stack):
                                    destination_key_prefix=iot_device_info
                                    )
         self.data_bucket = data_bucket
+        
+        # DynamoDB table to hold app memory
+        self.memory_table = dynamodb.Table(
+            self, "SessionTable",
+            partition_key=dynamodb.Attribute(
+                name="SessionId",
+                type=dynamodb.AttributeType.STRING
+            ),
+            # Additional properties like billing mode, encryption, etc., can be added here
+            # For example, to use PAY_PER_REQUEST billing mode, uncomment the following line:
+            # billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST
+        )
 
         # create app execute role
         app_execute_role = iam.Role(self, "AppExecuteRole",
@@ -65,6 +78,16 @@ class BaseInfraStack(Stack):
                 resources=["*"]
             )  
         )
+        
+        app_execute_role.add_to_policy(
+            iam.PolicyStatement(
+                actions=[
+                    "dynamodb:*",
+                ],
+                resources=[self.memory_table.table_arn]
+            )  
+        )
+        
         data_bucket.grant_read_write(app_execute_role)
         self.app_execute_role = app_execute_role
 

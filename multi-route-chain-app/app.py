@@ -66,7 +66,8 @@ app_env_vars = {
     "CUSTOM_CHAIN_LAMBDA": action_lambda_stack.lambda_arn,
     "ATHENA_SCHEMA": ATHENA_DB,
     "STREAMLIT_SERVER_PORT": "8501",
-    "ATHENA_WORKGROUP": ATHENA_WORKGROUP
+    "ATHENA_WORKGROUP": ATHENA_WORKGROUP,
+    "MEMORY_TABLE": base_data_stack.memory_table.table_name
 }
 
 frontend_stack = FrontendStack(app, f"{APP_PREFIX}FrontendStack",

@@ -23,8 +23,20 @@ WORKDIR /app
 # Copy files
 COPY assets /app/assets
 COPY requirements.txt /app
-COPY routing_chain_claude.py /app
 COPY sqldatabasechain.py /app
+
+# Copy application file
+ARG APP=routing_chain_claude_with_memory_dynamo.py
+COPY $APP /app
+
+# ~~ Modifications ~~
+ARG APP=basic_memory.py
+RUN mkdir -p /app/.streamlit
+RUN touch /app/.streamlit/secrets.toml
+COPY $APP /app
+RUN ls
+# ~~ Modifications ~~
+
 
 RUN pip3 install -r requirements.txt
 
@@ -34,4 +46,4 @@ USER $USER
 
 EXPOSE 8501
 
-ENTRYPOINT ["streamlit", "run", "routing_chain_claude_with_memory.py", "--server.port=8501", "--server.address=0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "routing_chain_claude_with_memory_dynamo.py", "--server.port=8501", "--server.address=0.0.0.0"]
