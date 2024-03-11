@@ -29,15 +29,6 @@ COPY sqldatabasechain.py /app
 ARG APP=routing_chain_claude_with_memory_dynamo.py
 COPY $APP /app
 
-# ~~ Modifications ~~
-ARG APP=basic_memory.py
-RUN mkdir -p /app/.streamlit
-RUN touch /app/.streamlit/secrets.toml
-COPY $APP /app
-RUN ls
-# ~~ Modifications ~~
-
-
 RUN pip3 install -r requirements.txt
 
 RUN chown $USERNAME:$USERNAME /app

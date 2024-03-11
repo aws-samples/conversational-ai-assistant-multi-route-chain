@@ -496,15 +496,17 @@ full_chain_with_memory = RunnableWithMessageHistory(
 user_msg_types = ["user", "human"]
 def main():
     st.title("Conversational AI - Plant Technician")
+    display_msgs = []
     for msg in msgs.messages:
-        if msg.type in user_msg_types:
+        if msg.type in user_msg_types and msg.content not in display_msgs:
+            display_msgs.append(msg.content)
             st.chat_message(msg.type).write(msg.content)
         else:
             if str(msg.content).startswith(prefix):
                 st.chat_message("ai").write(str(msg.content).replace(prefix, ""))
+            
 
     if prompt := st.chat_input():
-        print("HERE1")
         st.chat_message("User").write(prompt)
         # As usual, new messages are added to StreamlitChatMessageHistory when the Chain is called.
         # Ensure 'session_id' is consistently passed in the configuration for all chain invocations.
@@ -513,7 +515,6 @@ def main():
         
         # Pass the same config to the full_chain invocation, ensuring that the session_id is included.
         response = full_chain_with_memory.invoke({"question": prompt}, config)
-        print("HERE2")
         st.chat_message("ai").write(response.replace(prefix, ""))
 
 
