@@ -4,6 +4,7 @@ import streamlit as st
 import json
 import boto3
 import os
+from datetime import datetime
 
 from langchain_core.output_parsers import StrOutputParser
 
@@ -13,7 +14,6 @@ from langchain_community.embeddings import BedrockEmbeddings
 from langchain_community.vectorstores import OpenSearchVectorSearch
 from opensearchpy import RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
-import os
 from langchain.llms.bedrock import Bedrock
 from sqlalchemy import create_engine
 from langchain_community.utilities.sql_database import SQLDatabase
@@ -119,22 +119,42 @@ def get_aws4_auth():
     )
 retriever = create_retriever()
 
-# Setup chat history
-chat_history_key_list = ["Chat-1", "Chat-2", "Chat-3", "Chat-4", "Chat-5"]
-memory_table_name = os.environ.get("MEMORY_TABLE","SessionTable")
 
+# Setup chat history
+
+# Function to prepend a prefix for filtering
+prefix = "final_answer: "
+def prepend_answer(text):
+    return f"{prefix}{text}"
+
+# DynamoDB table to store chat history
+memory_table_name = os.environ.get("MEMORY_TABLE","SessionTable")
 dynamodb = boto3.resource('dynamodb')
 memory_table = dynamodb.Table(memory_table_name)
 
-with st.sidebar:
-    chat_history_key = st.selectbox('Choose a chat history session', chat_history_key_list, 0)
-    if st.button("Clear chat", type="primary"):
-        memory_table.delete_item(Key={ 'SessionId': chat_history_key })
+# Load previous chat sessions with a Scan operation
+if not 'chat_history_list' in st.session_state:
+    chat_history_list = [item['SessionId'] for item in memory_table.scan(ProjectionExpression='SessionId').get('Items', [])]
+    session_name = datetime.now().strftime("Chat - %a %b %d @ %H:%M:%S")
+    st.session_state['session_name'] = session_name
+    chat_history_list.append(session_name)
+    st.session_state['chat_history_list'] = chat_history_list
 
+# Display chat sessions in a sidebar
+with st.sidebar:
+    chat_history_list = st.session_state['chat_history_list']
+    chat_history_key = st.selectbox('Choose a chat', chat_history_list, chat_history_list.index(st.session_state.session_name))
+    if st.button("Delete chat", type="primary"):
+        memory_table.delete_item(Key={ 'SessionId': chat_history_key })
+        chat_history_list.remove(chat_history_key)
+        st.session_state['chat_history_list'] = chat_history_list
+        st.rerun()
+
+print(f"HERE: {chat_history_key}")
 msgs = DynamoDBChatMessageHistory(table_name=memory_table_name, session_id=chat_history_key)
 print(f"INFO: Using table {memory_table_name} and key {chat_history_key}, # of messages {len(msgs.messages)}")
 if len(msgs.messages) == 0:
-    msgs.add_ai_message("How can I help you?")
+    msgs.add_ai_message(prepend_answer("How can I help you?"))
 
 #Defin the routing chain -  
 router_prompt = ChatPromptTemplate.from_messages(
@@ -173,12 +193,12 @@ chain = (
     | llm
 )
 
-chain_with_history = RunnableWithMessageHistory(
-    chain,
-    lambda session_id: msgs,  # Always return the instance created earlier
-    input_messages_key="question",
-    history_messages_key="history",
-)
+# chain_with_history = RunnableWithMessageHistory(
+#     chain,
+#     lambda session_id: msgs,  # Always return the instance created earlier
+#     input_messages_key="question",
+#     history_messages_key="history",
+# )
 
 
 
@@ -467,21 +487,17 @@ def route(info,config):
         elif destination == "rag":
             return rag_chain.invoke(info["next_inputs"])
         elif destination == "physics":
-            return physics_chain.invoke(info)
+            return physics_chain.invoke(info, config)
         else:
             return general_chain.invoke(info,config)
     else:
         # Fallback or default routing
-        return general_chain.invoke(info)
-
-prefix = "final_answer: "
-def prepend_answer(text):
-    return f"{prefix}{text}"
-
+        return general_chain.invoke(info,config)
 
 # Define the full chain which includs the routing and all dest chains 
 full_chain = (
-    {"topic": chain_with_history, "question": lambda x: x["question"]} 
+    {"topic": chain, "question": lambda x: x["question"]} 
+    # {"topic": chain_with_history, "question": lambda x: x["question"]} 
     | RunnableLambda(route) 
     | RunnableLambda(prepend_answer)
 )
