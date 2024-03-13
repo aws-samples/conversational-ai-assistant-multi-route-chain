@@ -18,9 +18,7 @@ from langchain.llms.bedrock import Bedrock
 from sqlalchemy import create_engine
 from langchain_community.utilities.sql_database import SQLDatabase
 
-import json
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-import boto3  
 from langchain_community.chat_message_histories import DynamoDBChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
@@ -73,10 +71,6 @@ osendpoint = os.environ.get('OPENSEARCH_ENDPOINT')
 lambda_function_name = os.environ.get(
     'CUSTOM_CHAIN_LAMBDA')  # Update the Lambda Function Name
 
-import langchain_core
-import langchain_community
-#st.title(f"Conversational AI - Plant Technician [Langchain version: {langchain_core.__version__}, Streamlit version: {st.__version__}, Langchain community version: {langchain_community.__version__}]")
-
 ##Define the Vector DB retriver 
 def create_retriever():
     index_name = 'docs'
@@ -106,7 +100,6 @@ def get_aws4_auth():
     session = boto3.Session()
     credentials = session.get_credentials()
 
-
     if not credentials:
         raise ValueError("No AWS credentials found!")
     
@@ -120,9 +113,9 @@ def get_aws4_auth():
 retriever = create_retriever()
 
 
-# Setup chat history
+# Setup chat history with DynamoDB
 
-# Function to prepend a prefix for filtering
+# Function to prepend a prefix for filtering on the UI
 prefix = "final_answer: "
 def prepend_answer(text):
     return f"{prefix}{text}"
@@ -150,13 +143,13 @@ with st.sidebar:
         st.session_state['chat_history_list'] = chat_history_list
         st.rerun()
 
-print(f"HERE: {chat_history_key}")
 msgs = DynamoDBChatMessageHistory(table_name=memory_table_name, session_id=chat_history_key)
-print(f"INFO: Using table {memory_table_name} and key {chat_history_key}, # of messages {len(msgs.messages)}")
 if len(msgs.messages) == 0:
     msgs.add_ai_message(prepend_answer("How can I help you?"))
 
-#Defin the routing chain -  
+print(f"INFO: Using table {memory_table_name} and key {chat_history_key}, # of messages {len(msgs.messages)}")
+
+# Define the routing chain -  
 router_prompt = ChatPromptTemplate.from_messages(
     [
         ("""Given the user question below, classify it as one of the candidate prompt. You may want to modify the input considering the chat history and the contex of the question. Sometimes the user may just assume that you have the context of the covnersation and may not provide a clear input. Hence, you are being provided with the chat history for more context. Respond  with only a Markdown code snippet containing a JSON object formatted EXACTLY as specified below. Do not provide an explaination to your calssification beside the Markdown, I just need to know your decision on which destination and next_inputs
@@ -193,16 +186,7 @@ chain = (
     | llm
 )
 
-# chain_with_history = RunnableWithMessageHistory(
-#     chain,
-#     lambda session_id: msgs,  # Always return the instance created earlier
-#     input_messages_key="question",
-#     history_messages_key="history",
-# )
-
-
-
-#Defin all Destination chains including SQL, RAG, Lambda, SME, and default 
+# Define all Destination chains including SQL, RAG, Lambda, SME, and default 
 
 sql_prompt = ChatPromptTemplate.from_template(
 """
@@ -281,8 +265,6 @@ Based on the table schema below, question, sql query, and sql response, write a 
 
 def get_schema(_):
     return db.get_table_info()
-# response1 = get_schema() 
-# print(response1)
 
 def run_query(query):
     return db.run(query)
@@ -450,9 +432,7 @@ general_chain = RunnableWithMessageHistory(
     history_messages_key="history",
 )
 
-#Define the routing logic based on routing chain output --> to Dest chain 
-import json
-
+# Define the routing logic based on routing chain output --> to Dest chain 
 def route(info,config):
     topic = info["topic"].lower()
     print('Info:', info)
@@ -469,11 +449,11 @@ def route(info,config):
                 next_inputs = parsed_json['next_inputs']
                 print('Next Inputs:', next_inputs)
                 info['next_inputs'] = next_inputs
-                info['next_inputs'] = next_inputs
             
             if 'destination' in parsed_json:
                 destination = parsed_json['destination']
                 print('Destination:', destination)
+                
     except json.JSONDecodeError as e:
         print("Topic does not contain valid JSON:", e)
 
@@ -497,7 +477,6 @@ def route(info,config):
 # Define the full chain which includs the routing and all dest chains 
 full_chain = (
     {"topic": chain, "question": lambda x: x["question"]} 
-    # {"topic": chain_with_history, "question": lambda x: x["question"]} 
     | RunnableLambda(route) 
     | RunnableLambda(prepend_answer)
 )
@@ -509,6 +488,7 @@ full_chain_with_memory = RunnableWithMessageHistory(
     history_messages_key="history",
 )
 
+# Streamlit UI
 user_msg_types = ["user", "human"]
 def main():
     st.title("Conversational AI - Plant Technician")
