@@ -8,7 +8,7 @@ This folder provides a step-by-step guide on creating a Conversational AI assist
 - **Specialized Chatbot Interactions**: Explains how to use Langchain's [LLMChain](https://api.python.langchain.com/en/latest/chains/langchain.chains.llm.LLMChain.html#langchain.chains.llm.LLMChain) for engaging in specialized conversations and performing tasks by leveraging large language models, ensuring that the AI can handle a variety of user intents with high precision.
 - **Natural Conversational Engagement**: Focuses on using the same [LLMChain](https://api.python.langchain.com/en/latest/chains/langchain.chains.llm.LLMChain.html#langchain.chains.llm.LLMChain) to maintain a natural and fluid conversation flow, making interactions feel more human-like and intuitive.
 
-A key aspect covered is the preservation of conversation context and chat history, which is crucial for the AI to understand the user's ongoing intent and provide responses that are coherent and contextually enriched. For details on how context is maintained and utilized to enhance conversations, the repository includes information on [Langchain memory](https://python.langchain.com/docs/modules/memory/) techniques.
+A key aspect covered is the preservation of conversation context and chat history, which is crucial for the AI to understand the user's ongoing intent and provide responses that are coherent and contextually enriched. Please review the Memory implementation section for an overview.
 
 ## Solution architecture
 
@@ -35,11 +35,18 @@ A key aspect covered is the preservation of conversation context and chat histor
 
 ![Technical Architecture](technical_architecture_langchain_implementation.png)
 
+
+### Memory implementation
+
+We use Langchain’s [Memory system](https://python.langchain.com/docs/modules/memory/) to add context for the LLM based on previous interactions. For example, if a user asks questions about a device, the LLM can determine the correct device ID as long as it was mentioned in a previous message. We use [RunnableWithMessageHistory](https://python.langchain.com/docs/expression_language/how_to/message_history) to add memory to specific chains. There are multiple memory implementations to store and retrieve history. We use AWS DynamoDB with langchain's [DynamoDBChatMessageHistory](https://python.langchain.com/docs/integrations/memory/aws_dynamodb) to externalize memory storage which allows for a loosely coupled design. It also provides persistent memory so that the user can recall and continue a previous chat session. This is shown in the following image. 
+
+![Chat sessions](choose_chat_history_session.png)
+
 ## Code struture
 
 This folder helps to set up the multi-route chain app using [CDK](https://aws.amazon.com/cdk/). Specifically, it contains the following stacks:
 
-- **MultiRouteChainBaseInfraStack**: it creates an S3 bucket and uploads all the data to be used by the Multi-route Chain APP to that bucket.
+- **MultiRouteChainBaseInfraStack**: it creates an S3 bucket and uploads all the data to be used by the Multi-route Chain APP to that bucket. It also creates the DynamoDB table to store chat history.
 - **MultiRouteChainSqlChainStack**: it creates a Glue Crawler to crawl the data in the data bucket and sets up Athena data catelog.
 - **MultiRouteChainRagStack**: it creates an OpenSearch serverless collection for vector search. And add the data into the index `docs`.
 - **MultiRouteChainActionLambdaStack**: it creates an action lambda to send SES email.
