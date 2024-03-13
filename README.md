@@ -1,55 +1,45 @@
-# Multi-Route Chain Application - Building an Advanced Conversational AI Assistant
+# Building an Advanced Conversational AI Assistant
 
 ## Content
-- [Overview](#overview)
-- [Solution Architecture](#solution-architecture)
-- [Technical Deep Dive](#technical-deep-dive)
-- [How to Use](#how-to-use)
-
+- [Building an Advanced Conversational AI Assistant](#building-an-advanced-conversational-ai-assistant)
+  - [Content](#content)
+  - [Overview](#overview)
+  - [Solution Architecture](#solution-architecture)
+    - [Solution 1: Open source langchain implementation](#solution-1-open-source-langchain-implementation)
+    - [Solution 2: Agents for Bedrock implementation](#solution-2-agents-for-bedrock-implementation)
+  - [Demo](#demo)
 
 ## Overview
 
-This repository provides a step-by-step guide on creating a Conversational AI assistant that intelligently routes user inputs to the most relevant chatbot function, enhancing user interaction through precise and context-aware responses. It leverages AWS services such as [Amazon Bedrock](https://aws.amazon.com/bedrock) a fully managed service that offers a choice of high-performing foundation models (FMs) from leading AI companies like AI21 Labs, Anthropic, Cohere, Meta, Stability AI, and Amazon via a single API. For this project, we specifically employ the Anthropic Claude V2 model alongside [Langchain](https://python.langchain.com/docs/integrations/llms/bedrock) to deliver various capabilities.
+In this repository, we explore the transformative impact of AI assistants in manufacturing, where they empower technicians to efficiently oversee and maintain machinery. A simple command to check a device's status triggers the system to employ large language models (LLMs) for generating SQL queries, fetching relevant data, and delivering clear responses. For complex queries, the system switches to a Retrieval-Augmented Generation (RAG) mode, leveraging LLMs and embeddings to mine deeper insights from extensive knowledge bases. Actionable requests activate custom scripts, facilitating smooth operations and maintaining continuous production flow. Each interaction enhances the assistant's conversational skills, making it more adept over time.
 
-- **Querying Databases**: Demonstrates how to query an Athena database using Langchain's [SQLDatabaseChain](https://python.langchain.com/docs/use_cases/qa_structured/sql), enabling the AI to fetch and present data directly from structured databases in response to user queries.
-- **Semantic Searches**: Shows how to perform advanced semantic searches within an OpenSearch Vector index by integrating Langchain's [ConversationalRetrievalChain](https://api.python.langchain.com/en/latest/chains/langchain.chains.conversational_retrieval.base.ConversationalRetrievalChain.html) and [OpenSearch](https://python.langchain.com/docs/integrations/vectorstores/opensearch), enhancing the AI's ability to understand and retrieve relevant information based on the context of the conversation.
-- **Triggering Lambda Functions**: Illustrates how to execute custom Lambda functions for specific tasks through Langchain's [Custom Chain](https://python.langchain.com/docs/modules/chains/how_to/custom_chain), allowing for a wide range of actions, from data manipulation to initiating workflows, based on user requests.
-- **Specialized Chatbot Interactions**: Explains how to use Langchain's [LLMChain](https://api.python.langchain.com/en/latest/chains/langchain.chains.llm.LLMChain.html#langchain.chains.llm.LLMChain) for engaging in specialized conversations and performing tasks by leveraging large language models, ensuring that the AI can handle a variety of user intents with high precision.
-- **Natural Conversational Engagement**: Focuses on using the same [LLMChain](https://api.python.langchain.com/en/latest/chains/langchain.chains.llm.LLMChain.html#langchain.chains.llm.LLMChain) to maintain a natural and fluid conversation flow, making interactions feel more human-like and intuitive.
+Additionally, this repository assesses various AI assistant implementation strategies, including open-source options like LangChain and proprietary solutions like the Amazon Bedrock agent, discussing the benefits and drawbacks of each approach. We outline the creation of a Conversational AI assistant designed to intelligently direct user inputs towards the most suitable chatbot functionality including:
 
-A key aspect covered is the preservation of conversation context and chat history, which is crucial for the AI to understand the user's ongoing intent and provide responses that are coherent and contextually enriched. For details on how context is maintained and utilized to enhance conversations, the repository includes information on [Langchain memory](https://python.langchain.com/docs/modules/memory/) techniques.
+- **Database Queries**: Explains how to fetch and present data from structured databases in direct response to user queries, enabling the AI to provide precise information as needed.
+- **Semantic Searches**: Demonstrates advanced semantic search capabilities within a vector index, enhancing the AI's ability to understand and retrieve relevant information based on the nuances of conversation context.
+- **Custom Tasks via Lambda Functions**: Offers insights into executing specific tasks requested by users, ranging from data manipulation to initiating complex workflows, showcasing the AI's adaptability to varied user needs.
+- **Specialized Conversations**: Details engaging in specialized dialogues and performing distinct tasks, ensuring the AI can handle a wide array of user intents with high precision.
+- **Natural Conversational Flow**: Focuses on maintaining a seamless and natural dialogue, making interactions feel more intuitive and human-like.
 
 This repository serves as a comprehensive guide for developers looking to build sophisticated Conversational AI systems that can intelligently navigate and respond to a wide array of user inputs, making digital interactions more efficient, accurate, and user-friendly.
 
 ## Solution Architecture
 
-![Sample Image](/assets/solution_overview.png)
+This repository provides the following solutions. 
 
-1.	User Input Reception: The user presents a question/query to the Conversational AI system.
-2.	Initial LLM Evaluation: An LLM evaluates each question along with the chat history from the same session to determine its nature and which subject area it falls under (e.g., SQL, action, search, SME).
-3.	Router Chain Activation:
-    - If the question is identified with a subject, the Router Chain directs it to the corresponding Destination Chain.
-    - The Default Chain handles queries that don't match specific subjects, providing insights through the Bedrock Model.
-4.	Subject-Specific Routing:
-    - SQL-related queries are sent to the SQL Destination Chain for database interactions.
-    - Action-oriented questions trigger the Custom Lambda Destination Chain for executing operations.
-    - Search-focused inquiries proceed to the RAG Destination Chain for information retrieval.
-    - SME-related questions go to the SME/Expert Destination Chain for specialized insights.
-5.	Destination Chain Processing: Each Destination Chain takes the input and executes the necessary models or functions:
-    - SQL Chain uses [Amazon Athena](https://aws.amazon.com/athena) for executing queries.
-    - RAG Chain utilizes [Amazon OpenSearch](https://aws.amazon.com/opensearch-service/serverless-vector-engine/) for semantic searches.
-    - Custom Lambda Chain executes AWS Lambda functions for actions.
-    - SME/Expert Chain provides insights via the Bedrock Model.
-6.	Response Generation and Delivery: Responses from each Destination Chain are formulated into coherent insights by the LLM. These insights are then delivered to the user, completing the query cycle.
+### Solution 1: Open source langchain implementation
 
+Organizations can utilize Amazon Bedrock and Amazon SageMaker JumpStart to access a wide variety of Large Language Models (LLMs), with LangChain serving as the interface that seamlessly integrates these models into their applications. LangChain is an open-source framework that simplifies building Conversational AI by allowing easy integration of Large Language Models for specific needs. It offers a cost-effective way to develop AI applications quickly, with community support for troubleshooting and improvements. 
 
-## Technical deep dive
+Jump to [multi-route-chain-app](multi-route-chain-app/README.md) for detailed implementation and set up.
 
-![Technical Architecture](/assets/technical_architecture.png)
+### Solution 2: Agents for Bedrock implementation
 
-For detailed implementation instructions and setup steps, please refer to the guide linked [here](multi-route-chain-app/README.md)
+Bedrock Agent and Knowledge Base can be used to build and deploy Conversational AI with complex routing use cases. It provides a strategic advantage by simplifying infrastructure management, enhancing scalability, improving security, and alleviate undifferentiated heavy lifting.  
 
-## How to Use 
+Jump to [bedrock-agent-implementation](bedrock-agent-implementation/README.md) for detailed implementation and set up.
+
+## Demo
 
 1. This is Ameer, who are you?
 2. Can you query me max metrics for device 1001?
