@@ -45,7 +45,7 @@ class BaseInfraStack(Stack):
                                 server_access_logs_prefix="ServerAccessLogs/"
                                 )
 
-        s3_deploy.BucketDeployment(self, "DeployDeviceMetrics",
+        deploy_metrics_data = s3_deploy.BucketDeployment(self, "DeployDeviceMetrics",
                                    sources=[s3_deploy.Source.asset(
                                        os.path.join(dirname, f"../data/{DEVICE_DATA_PATH}"))],
                                    destination_bucket=data_bucket,
@@ -113,7 +113,7 @@ class BaseInfraStack(Stack):
             on_delete=self.delete_glue_db(ATHENA_DB),
             resource_type='Custom::MyCustomResource'
         )
-
+        res.node.add_dependency(deploy_metrics_data)
         res.node.add_dependency(crawler)
 
         # set up athena workgroup

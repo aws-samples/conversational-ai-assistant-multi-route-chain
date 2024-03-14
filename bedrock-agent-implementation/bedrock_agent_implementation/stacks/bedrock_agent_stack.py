@@ -33,26 +33,21 @@ KNOWLEDGE_BASE_DESC = "Knowledge base to search and retrieve IoT Device Specs"
 OSS_COLLECTION = "bedrock-agent"
 
 BEDROCK_AGENT_INSTRUCTION = f"""
-You are an IoT Ops agent that handles the following activities:
-- looking up IoT device information
-- checking IoT operating metrics (historical data)
-- performing actions on a device by device id
-- answer general questions
-
-You can check device information(Device Id, Features, Technical Specifications, Installation Guide, Maintenance and Troubleshooting, Safety Guidelines, Warranty and Support) from "{KNOWLEDGE_BASE_NAME}" knowledge base.
-
-You can also check the device historical data or device metrics. 
-The device metrics is stored in a Athena DB named "iot_ops_glue_db" table named "iot_device_metrics". 
-The table has following schema: 
-iot_device_metrics: 
-    fields: 
-        - name: oil_level type: double 
-        - name: temperature type: double 
-        - name: pressure type: double 
-        - name: received_at type: string 
-        - name: device_id type: bigint
-
-You can also perform actions (start, shutdown, reboot) on the device.
+As an IoT Ops agent, you handle managing and monitoring IoT devices: 
+1. looking up device info in "{KNOWLEDGE_BASE_NAME}"
+2. checking metrics from Athena "iot_ops_glue_db"."iot_device_metrics" table with columns:
+    - name: oil_level type: double 
+    - name: temperature type: double 
+    - name: pressure type: double 
+    - name: received_at type: string 
+    - name: device_id type: bigint
+    - name: device_name type: bigint
+ When generating SQL queries, guidelines as follow:
+    For "received_at" queries, use: SELECT * FROM iot_device_metrics WHERE parse_datetime(TRIM(BOTH '"' FROM received_at), 'yyyy-MM-dd HH:mm:ss') >= current_timestamp - interval. 
+    For aggregate functions, include non-aggregated columns in GROUP BY, e.g., SELECT device_name, MAX(pressure) FROM iot_device_metrics GROUP BY device_name.
+    group_id and group_name are integers, e.g. 1001
+3. Perform actions like start, shutdown, reboot by device ID. 
+4. Answering general questions.
 """
 BEDROCK_AGENT_ALIAS="UAT"
 
