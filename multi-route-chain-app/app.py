@@ -97,7 +97,12 @@ NagSuppressions.add_stack_suppressions(base_data_stack, [
     {
         "id": "AwsSolutions-VPC7",
         "reason": "VPC Flow logs can be verbose and incur additional cost. This may be enabled by user if troubleshooting is needed"
-    }
+    },
+    {
+        "id": "AwsSolutions-DDB3",
+        "reason": "DynamoDB point in time backups should be enabled by customer if they wish to retain chat history."
+    },
+    
 ])
 
 # Sql chain stack suppressions
@@ -129,7 +134,12 @@ NagSuppressions.add_stack_suppressions(rag_stack, [
     {
         "id": "AwsSolutions-IAM5",
         "reason": "CloudFormation custom resource lambda role. Part of bootstrap, not for the actual workload."
-    }
+    },
+    {
+        "id": "AwsSolutions-EC23",
+        "reason": "Supress error for custom resource"
+    },
+    
 ])
 
 # Action lambda chain stack suppressions
