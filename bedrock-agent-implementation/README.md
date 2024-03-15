@@ -6,7 +6,7 @@ This folder contains the [Bedrock Agent and Knowledge Base](https://aws.amazon.c
 
 ## Solution architecture
 
-![bedrock_solution](bedrock_agent_solution.png)
+![bedrock_solution](assets/bedrock_agent_solution.png)
 
 This solution leverages the Amazon Bedrock platform, which integrates an advanced AI model, the Amazon Bedrock Foundation Model (Anthropic Claude 2), to provide IoT device management and operations conversational AI assistant. The agent is prompted with following instruction: 
 
@@ -29,7 +29,7 @@ You are an IoT Ops agent that handles the following activities:- looking up IoT 
 
 ## Technical architecture
 
-![bedrock_technical_architecture](bedrock_agent_architecture.png)
+![bedrock_technical_architecture](assets/bedrock_agent_architecture.png)
 
 ## Features
 

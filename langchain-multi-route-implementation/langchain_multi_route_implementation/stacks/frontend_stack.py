@@ -33,7 +33,7 @@ class FrontendStack(Stack):
         # Build Docker image
         imageAsset = DockerImageAsset(self, "FrontendStreamlitImage",
                                       directory=(
-                                          "multi_route_chain_app/streamlit_frontend/")
+                                          "langchain_multi_route_implementation/streamlit_frontend/")
                                       )
 
         ecs_cluster = ecs.Cluster(self, 'StreamlitAppCluster',

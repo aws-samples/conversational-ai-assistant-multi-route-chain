@@ -12,6 +12,9 @@ __pycache__/
 ENV
 ENV/
 ENV.bak/
+.venv
+.venv/
+.venv.bak/
 
 # CDK Context & Staging files
 .cdk.staging/

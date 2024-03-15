@@ -12,7 +12,7 @@ A key aspect covered is the preservation of conversation context and chat histor
 
 ## Solution architecture
 
-![langchain_architecture](langchain_solution_overview.png)
+![langchain_architecture](assets/langchain_solution_overview.png)
 
 1.	User Input Reception: The user presents a question/query to the Conversational AI system.
 2.	Initial LLM Evaluation: An LLM evaluates each question along with the chat history from the same session to determine its nature and which subject area it falls under (e.g., SQL, action, search, SME).
@@ -33,14 +33,14 @@ A key aspect covered is the preservation of conversation context and chat histor
 
 ## Technical architecture
 
-![Technical Architecture](technical_architecture_langchain_implementation.png)
+![Technical Architecture](assets/technical_architecture_langchain_implementation.png)
 
 
 ### Memory implementation
 
 We use Langchain’s [Memory system](https://python.langchain.com/docs/modules/memory/) to add context for the LLM based on previous interactions. For example, if a user asks questions about a device, the LLM can determine the correct device ID as long as it was mentioned in a previous message. We use [RunnableWithMessageHistory](https://python.langchain.com/docs/expression_language/how_to/message_history) to add memory to specific chains. There are multiple memory implementations to store and retrieve history. We use AWS DynamoDB with langchain's [DynamoDBChatMessageHistory](https://python.langchain.com/docs/integrations/memory/aws_dynamodb) to externalize memory storage which allows for a loosely coupled design. It also provides persistent memory so that the user can recall and continue a previous chat session. This is shown in the following image. 
 
-![Chat sessions](choose_chat_history_session.png)
+![Chat sessions](assets/choose_chat_history_session.png)
 
 ## Code struture
 

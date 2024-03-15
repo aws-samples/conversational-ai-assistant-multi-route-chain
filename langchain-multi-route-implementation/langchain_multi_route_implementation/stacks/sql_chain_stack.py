@@ -100,7 +100,7 @@ class SqlChainStack(Stack):
 
         return AwsSdkCall(
             action='startCrawler',
-            service='Glue',
+            service='@aws-sdk/client-glue',
             parameters=params,
             physical_resource_id=PhysicalResourceId.of(
                 f'StartCrawler-{self.crawler_name}')
@@ -114,7 +114,7 @@ class SqlChainStack(Stack):
 
         return AwsSdkCall(
             action='deleteDatabase',
-            service='Glue',
+            service='@aws-sdk/client-glue',
             parameters=params,
             physical_resource_id=PhysicalResourceId.of(
                 f'DeleteDatabase-{athena_db}')

@@ -31,14 +31,14 @@ class BaseInfraStack(Stack):
 
         s3_deploy.BucketDeployment(self, "DeployDeviceMetrics",
                                    sources=[s3_deploy.Source.asset(
-                                       os.path.join(dirname, f"data/{iot_device_data}"))],
+                                       os.path.join(dirname, f"../../../data/{iot_device_data}"))],
                                    destination_bucket=data_bucket,
                                    destination_key_prefix=iot_device_data
                                    )
 
         s3_deploy.BucketDeployment(self, "DeployDeviceInfo",
                                    sources=[s3_deploy.Source.asset(
-                                       os.path.join(dirname, f"data/{iot_device_info}"))],
+                                       os.path.join(dirname, f"../../../data/{iot_device_info}"))],
                                    destination_bucket=data_bucket,
                                    destination_key_prefix=iot_device_info
                                    )
