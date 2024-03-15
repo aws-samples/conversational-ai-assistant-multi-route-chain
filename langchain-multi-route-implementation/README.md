@@ -61,11 +61,33 @@ This folder helps to set up the multi-route chain app using [CDK](https://aws.am
 4. [Install Docker](https://www.docker.com/get-started/). Because we are bundling Lambda functions when running CDK so we need to install Docker. Please see the blog post about [Building, bundling and deploying applications with the AWS CDK](https://aws.amazon.com/blogs/devops/building-apps-with-aws-cdk/)
 
 ### Run CDK
-1. Change directory to `multi_route_chain_app`
+1. Change directory to `langchain-multi-route-implementation`
+2. To manually create a virtualenv on MacOS and Linux:
+    ```
+    python3 -m venv .venv
+    ```
+3. After the init process completes and the virtualenv is created, you can use the following
+step to activate your virtualenv.
+
+    ```
+    source .venv/bin/activate
+    ```
+
+    If you are a Windows platform, you would activate the virtualenv like this:
+
+    ```
+    .venv\Scripts\activate.bat
+    ```
+4. Once the virtualenv is activated, you can install the required dependencies.
+
+    ```
+    pip install -r requirements.txt
+    ```
+5. At this point you can now synthesize the CloudFormation template for this code.
     ```
     cdk synth -c sender=<the email verified in SES> -c recipient=<the email verified in SES> --all
     ```
-2. Deploy the backend
+6. Deploy the application
     ```
     cdk deploy -c sender=<the email verified in SES> -c recipient=<the email verified in SES> --all --require-approval never
     ```
