@@ -21,7 +21,6 @@ WORKDIR /app
 # RUN aws --version
 
 # Copy files
-COPY assets /app/assets
 COPY requirements.txt /app
 COPY sqldatabasechain.py /app
 

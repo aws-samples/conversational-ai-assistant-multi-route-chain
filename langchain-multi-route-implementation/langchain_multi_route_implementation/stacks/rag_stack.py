@@ -52,7 +52,7 @@ class RagStack(Stack):
         custom_res_lambda = _lambda.Function(
             self, "IndexOpenSearchLambda",
             runtime=_lambda.Runtime.PYTHON_3_11,
-            code=_lambda.Code.from_asset('multi_route_chain_app/rag_stack_custom_resources',
+            code=_lambda.Code.from_asset('langchain_multi_route_implementation/custom_resources',
                                          bundling=BundlingOptions(
                                              image=_lambda.Runtime.PYTHON_3_11.bundling_image,
                                              command=['bash',

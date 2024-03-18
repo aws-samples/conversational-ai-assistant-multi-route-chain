@@ -31,7 +31,7 @@ This repository provides the following solutions.
 
 Organizations can utilize Amazon Bedrock and Amazon SageMaker JumpStart to access a wide variety of Large Language Models (LLMs), with LangChain serving as the interface that seamlessly integrates these models into their applications. LangChain is an open-source framework that simplifies building Conversational AI by allowing easy integration of Large Language Models for specific needs. It offers a cost-effective way to develop AI applications quickly, with community support for troubleshooting and improvements. 
 
-Jump to [multi-route-chain-app](multi-route-chain-app/README.md) for detailed implementation and set up.
+Jump to [langchain-multi-route-implementation](langchain-multi-route-implementation/README.md) for detailed implementation and set up.
 
 ### Solution 2: Agents for Bedrock implementation
 
@@ -41,12 +41,14 @@ Jump to [bedrock-agent-implementation](bedrock-agent-implementation/README.md) f
 
 ## Demo
 
+```
 1. This is Ameer, who are you?
-2. Can you query me max metrics for device 1001?
+2. Can you query the max metrics for device 1001?
 3. Can you search for the operating temperature range for this device?
 4. As a physics SME, can you compare the max temperature with the operating temperature range and tell me what you think?
 5. Okay, can you please shutdown this device?
 6. Can you generate a summary about our conversation today?
+```
 
 ![How to Use](/assets/conversationalAI-Recording-gif.gif)
 

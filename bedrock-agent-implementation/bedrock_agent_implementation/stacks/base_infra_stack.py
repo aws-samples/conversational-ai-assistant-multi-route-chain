@@ -47,14 +47,14 @@ class BaseInfraStack(Stack):
 
         deploy_metrics_data = s3_deploy.BucketDeployment(self, "DeployDeviceMetrics",
                                    sources=[s3_deploy.Source.asset(
-                                       os.path.join(dirname, f"../data/{DEVICE_DATA_PATH}"))],
+                                       os.path.join(dirname, f"../../../data/{DEVICE_DATA_PATH}"))],
                                    destination_bucket=data_bucket,
                                    destination_key_prefix=DEVICE_DATA_PATH
                                    )
 
         s3_deploy.BucketDeployment(self, "DeployDeviceInfo",
                                    sources=[s3_deploy.Source.asset(
-                                       os.path.join(dirname, f"../data/{DEVICE_INFO_PATH}"))],
+                                       os.path.join(dirname, f"../../../data/{DEVICE_INFO_PATH}"))],
                                    destination_bucket=data_bucket,
                                    destination_key_prefix=DEVICE_INFO_PATH
                                    )

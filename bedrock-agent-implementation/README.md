@@ -6,7 +6,7 @@ This folder contains the [Bedrock Agent and Knowledge Base](https://aws.amazon.c
 
 ## Solution architecture
 
-![bedrock_solution](bedrock_agent_solution.png)
+![bedrock_solution](assets/bedrock_agent_solution.png)
 
 This solution leverages the Amazon Bedrock platform, which integrates an advanced AI model, the Amazon Bedrock Foundation Model (Anthropic Claude 2), to provide IoT device management and operations conversational AI assistant. The agent is prompted with following instruction: 
 
@@ -29,7 +29,7 @@ You are an IoT Ops agent that handles the following activities:- looking up IoT 
 
 ## Technical architecture
 
-![bedrock_technical_architecture](bedrock_agent_architecture.png)
+![bedrock_technical_architecture](assets/bedrock_agent_architecture.png)
 
 ## Features
 
@@ -49,10 +49,32 @@ You are an IoT Ops agent that handles the following activities:- looking up IoT 
 
 ### Run CDK
 1. Change directory to `bedrock-agent-implementation`
+2. To manually create a virtualenv on MacOS and Linux:
+    ```
+    python3 -m venv .venv
+    ```
+3. After the init process completes and the virtualenv is created, you can use the following
+step to activate your virtualenv.
+
+    ```
+    source .venv/bin/activate
+    ```
+
+    If you are a Windows platform, you would activate the virtualenv like this:
+
+    ```
+    .venv\Scripts\activate.bat
+    ```
+4. Once the virtualenv is activated, you can install the required dependencies.
+
+    ```
+    pip install -r ../requirements.txt
+    ```
+5. At this point you can now synthesize the CloudFormation template for this code.
     ```
     cdk synth -c sender=<the email verified in SES> -c recipient=<the email verified in SES> --all
     ```
-2. Deploy the backend
+6. Deploy the application
     ```
     cdk deploy -c sender=<the email verified in SES> -c recipient=<the email verified in SES> --all --require-approval never
     ```

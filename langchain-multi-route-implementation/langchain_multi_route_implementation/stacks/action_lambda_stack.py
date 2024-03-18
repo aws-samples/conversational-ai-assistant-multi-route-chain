@@ -24,7 +24,7 @@ class ActionLambdaStack(Stack):
             self, "SESActionLambda",
             runtime=_lambda.Runtime.PYTHON_3_11,
             code=_lambda.Code.from_asset(
-                'multi_route_chain_app/ses_action_lambda'),
+                'langchain_multi_route_implementation/ses_action_lambda'),
             handler='lambda_function.lambda_handler',
             environment={
                 'SENDER': sender,
