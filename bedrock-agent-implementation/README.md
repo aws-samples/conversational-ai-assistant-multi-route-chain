@@ -65,16 +65,16 @@ step to activate your virtualenv.
     ```
     .venv\Scripts\activate.bat
     ```
-1. Once the virtualenv is activated, you can install the required dependencies.
+4. Once the virtualenv is activated, you can install the required dependencies.
 
     ```
-    pip install -r requirements.txt
+    pip install -r ../requirements.txt
     ```
-2. At this point you can now synthesize the CloudFormation template for this code.
+5. At this point you can now synthesize the CloudFormation template for this code.
     ```
     cdk synth -c sender=<the email verified in SES> -c recipient=<the email verified in SES> --all
     ```
-3. Deploy the application
+6. Deploy the application
     ```
     cdk deploy -c sender=<the email verified in SES> -c recipient=<the email verified in SES> --all --require-approval never
     ```
