@@ -28,7 +28,7 @@ def lambda_handler(event, _):
     print(f"Device ID: {device_id}, Action: {action}")
 
     # Change the region if necessary
-    ses_client = boto3.client('ses', region_name='us-east-1')
+    ses_client = boto3.client('ses')
 
     # Customize the email based on the action and deviceID
     subject = f"Action Performed: {action} on Device {device_id}"
