@@ -49,24 +49,31 @@ This folder helps to set up the multi-route chain app using [CDK](https://aws.am
 - **MultiRouteChainBaseInfraStack**: it creates an S3 bucket and uploads all the data to be used by the Multi-route Chain APP to that bucket. It also creates the DynamoDB table to store chat history.
 - **MultiRouteChainSqlChainStack**: it creates a Glue Crawler to crawl the data in the data bucket and sets up Athena data catelog.
 - **MultiRouteChainRagStack**: it creates an OpenSearch serverless collection for vector search. And add the data into the index `docs`.
-- **MultiRouteChainActionLambdaStack**: it creates an action lambda to send SES email.
+- **MultiRouteChainActionLambdaStack**: it creates an action lambda to send SES email. *Please consider to implement your own logic to perform actions on the device*
 - **MultiRouteChainFrontendStack**: it creates a Streamlit app running on ECS Fargate to interact with the LLM.
 
 ## Setup
 
 ### Pre-requisites
-1. [Enable models in Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html): for this use case, you need to enable Anthropic Claude V2 and Titan Embeddings models 
-2. [SES setup (verify email)](https://docs.aws.amazon.com/ses/latest/dg/setting-up.html)
-3. [Get started with CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html)
-4. [Install Docker](https://www.docker.com/get-started/). Because we are bundling Lambda functions when running CDK so we need to install Docker. Please see the blog post about [Building, bundling and deploying applications with the AWS CDK](https://aws.amazon.com/blogs/devops/building-apps-with-aws-cdk/)
+1. The solution is only available in `us-east-1` and `us-west-2`. Please choose either of them to proceed.
+2. [Enable models in Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html): for this use case, you need to enable Anthropic Claude V2 and Titan Embeddings models 
+3. [SES setup (verify email)](https://docs.aws.amazon.com/ses/latest/dg/setting-up.html) `ses_action_lambda` Lambda function implements the logic of sending email notificaiton. It is required to setup SES and verify and sender and recipient's emails beforehand. 
+4. [Get started with CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html).
+5. [Install Docker](https://www.docker.com/get-started/). Because we are bundling Lambda functions when running CDK so we need to install Docker. Please see the blog post about [Building, bundling and deploying applications with the AWS CDK](https://aws.amazon.com/blogs/devops/building-apps-with-aws-cdk/)
+
 
 ### Run CDK
-1. Change directory to `langchain-multi-route-implementation`
-2. To manually create a virtualenv on MacOS and Linux:
+1. Clone the repository.
+2.  Export `AWS_DEFAULT_REGION` to either region following the [CDK cli guide](https://docs.aws.amazon.com/cdk/v2/guide/cli.html#cli-environment).
+   ```
+   export AWS_DEFAULT_REGION={us-east-1, us-west-2}
+   ```
+3. Change directory to `langchain-multi-route-implementation`
+4. To manually create a virtualenv on MacOS and Linux:
     ```
     python3 -m venv .venv
     ```
-3. After the init process completes and the virtualenv is created, you can use the following
+5. After the init process completes and the virtualenv is created, you can use the following
 step to activate your virtualenv.
 
     ```
@@ -78,16 +85,20 @@ step to activate your virtualenv.
     ```
     .venv\Scripts\activate.bat
     ```
-4. Once the virtualenv is activated, you can install the required dependencies.
+6. Once the virtualenv is activated, you can install the required dependencies.
 
     ```
     pip install -r ../requirements.txt
     ```
-5. At this point you can now synthesize the CloudFormation template for this code.
+7. CDK bootstrap 
+   ```
+   cdk bootstrap -c sender=<the email verified in SES> -c recipient=<the email verified in SES> --all
+   ```
+8. At this point you can now synthesize the CloudFormation template for this code.
     ```
     cdk synth -c sender=<the email verified in SES> -c recipient=<the email verified in SES> --all
     ```
-6. Deploy the application
+9.  Deploy the application
     ```
     cdk deploy -c sender=<the email verified in SES> -c recipient=<the email verified in SES> --all --require-approval never
     ```

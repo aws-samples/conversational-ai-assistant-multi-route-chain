@@ -23,7 +23,7 @@ REGION = cdk.Aws.REGION
 BEDROCK_AGENT_NAME = "IotOpsAgent"
 FOUNDATION_MODEL = "anthropic.claude-v2:1"
 KNOWLEDGE_BASE_NAME = "IotDeviceSpecs"
-EMBEDDING_MODEL = "arn:aws:bedrock:us-east-1::foundation-model/amazon.titan-embed-text-v1"
+EMBEDDING_MODEL = f"arn:aws:bedrock:{REGION}::foundation-model/amazon.titan-embed-text-v1"
 VECTOR_FIELD_NAME = "bedrock-agent-embeddings"
 VECTOR_INDEX_NAME = "bedrock-agent-vector"
 TEXT_FIELD = "AMAZON_BEDROCK_TEXT_CHUNK"
@@ -457,7 +457,7 @@ class BedrockAgentStack(Stack):
             principal=iam.ServicePrincipal("bedrock.amazonaws.com"),
             action="lambda:InvokeFunction",
             source_account=ACCOUNT_ID,
-            source_arn=f"arn:aws:bedrock:us-east-1:{ACCOUNT_ID}:agent/{agent_id}"
+            source_arn=f"arn:aws:bedrock:{REGION}:{ACCOUNT_ID}:agent/{agent_id}"
         )
         
         action_1_lambda.role.add_managed_policy(
@@ -486,7 +486,7 @@ class BedrockAgentStack(Stack):
             principal=iam.ServicePrincipal("bedrock.amazonaws.com"),
             action="lambda:InvokeFunction",
             source_account=ACCOUNT_ID,
-            source_arn=f"arn:aws:bedrock:us-east-1:{ACCOUNT_ID}:agent/{agent_id}"
+            source_arn=f"arn:aws:bedrock:{REGION}:{ACCOUNT_ID}:agent/{agent_id}"
         )
 
         action_2_lambda.role.add_to_policy(
