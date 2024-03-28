@@ -4,16 +4,15 @@
 - [Building an Advanced Conversational AI Assistant](#building-an-advanced-conversational-ai-assistant)
   - [Content](#content)
   - [Overview](#overview)
-  - [Solution Architecture](#solution-architecture)
-    - [Solution 1: Open source langchain implementation](#solution-1-open-source-langchain-implementation)
-    - [Solution 2: Agents for Bedrock implementation](#solution-2-agents-for-bedrock-implementation)
+  - [Solutions](#solutions)
+    - [Solution 1: Agents for Bedrock implementation](#solution-1-agents-for-bedrock-implementation)
+    - [Solution 2: Open source langchain implementation](#solution-2-open-source-langchain-implementation)
+  - [Deployment Guide](#deployment-guide)
   - [Demo](#demo)
 
 ## Overview
 
-In this repository, we explore the transformative impact of AI assistants in manufacturing, where they empower technicians to efficiently oversee and maintain machinery. A simple command to check a device's status triggers the system to employ large language models (LLMs) for generating SQL queries, fetching relevant data, and delivering clear responses. For complex queries, the system switches to a Retrieval-Augmented Generation (RAG) mode, leveraging LLMs and embeddings to mine deeper insights from extensive knowledge bases. Actionable requests activate custom scripts, facilitating smooth operations and maintaining continuous production flow. Each interaction enhances the assistant's conversational skills, making it more adept over time.
-
-Additionally, this repository assesses various AI assistant implementation strategies, including open-source options like LangChain and proprietary solutions like the Amazon Bedrock agent, discussing the benefits and drawbacks of each approach. We outline the creation of a Conversational AI assistant designed to intelligently direct user inputs towards the most suitable chatbot functionality including:
+This repository explores the transformative potential of generative AI assistants. It assesses various AI assistant implementation strategies, including open-source options like **LangChain** and proprietary solutions like the **Amazon Bedrock Agent**. We outline the creation of a Conversational AI assistant designed to intelligently direct user inputs towards the most suitable chatbot functionality including:
 
 - **Database Queries**: Explains how to fetch and present data from structured databases in direct response to user queries, enabling the AI to provide precise information as needed.
 - **Semantic Searches**: Demonstrates advanced semantic search capabilities within a vector index, enhancing the AI's ability to understand and retrieve relevant information based on the nuances of conversation context.
@@ -21,23 +20,31 @@ Additionally, this repository assesses various AI assistant implementation strat
 - **Specialized Conversations**: Details engaging in specialized dialogues and performing distinct tasks, ensuring the AI can handle a wide array of user intents with high precision.
 - **Natural Conversational Flow**: Focuses on maintaining a seamless and natural dialogue, making interactions feel more intuitive and human-like.
 
-This repository serves as a comprehensive guide for developers looking to build sophisticated Conversational AI systems that can intelligently navigate and respond to a wide array of user inputs, making digital interactions more efficient, accurate, and user-friendly.
+To highlight the benefits of generative AI, the repository presents a use case of an IoT operations AI bot in manufacturing environments. This Conversational AI bot can leverage LLMs and RAG to generate SQL queries, fetch relevant data from databases, and provide clear responses about the status or performance of connected devices. This capability enables proactive maintenance and ensures continuous production flow, demonstrating the transformative potential of generative AI in optimizing industrial operations.
 
-## Solution Architecture
+## Solutions
 
-This repository provides the following solutions. 
+### Solution 1: Agents for Bedrock implementation
 
-### Solution 1: Open source langchain implementation
+![bedrock_solution](bedrock-agent-implementation/assets/bedrock_agent_architecture.png)
 
-Organizations can utilize Amazon Bedrock and Amazon SageMaker JumpStart to access a wide variety of Large Language Models (LLMs), with LangChain serving as the interface that seamlessly integrates these models into their applications. LangChain is an open-source framework that simplifies building Conversational AI by allowing easy integration of Large Language Models for specific needs. It offers a cost-effective way to develop AI applications quickly, with community support for troubleshooting and improvements. 
+Bedrock Agent and Knowledge Base can be used to build and deploy Conversational AI with complex routing use cases. It provides a strategic advantage by simplifying infrastructure management, enhancing scalability, improving security, and alleviate undifferentiated heavy lifting.    
 
-Jump to [langchain-multi-route-implementation](langchain-multi-route-implementation/README.md) for detailed implementation and set up.
+Jump to [bedrock-agent-implementation](bedrock-agent-implementation/README.md) for more details.
 
-### Solution 2: Agents for Bedrock implementation
+### Solution 2: Open source langchain implementation
 
-Bedrock Agent and Knowledge Base can be used to build and deploy Conversational AI with complex routing use cases. It provides a strategic advantage by simplifying infrastructure management, enhancing scalability, improving security, and alleviate undifferentiated heavy lifting.  
+![langchain_architecture](langchain-multi-route-implementation/assets/technical_architecture_langchain_implementation.png)
 
-Jump to [bedrock-agent-implementation](bedrock-agent-implementation/README.md) for detailed implementation and set up.
+LangChain is an open-source framework that simplifies building Conversational AI by allowing easy integration of Large Language Models for specific needs. It offers a cost-effective way to develop AI applications quickly, with community support for troubleshooting and improvements. 
+
+Jump to [langchain-multi-route-implementation](langchain-multi-route-implementation/README.md) for more details.
+
+## Deployment Guide
+
+For a comprehensive step-by-step deployment guide, please refer to the detailed solution README file:
+ - [bedrock-agent-implementation](bedrock-agent-implementation/README.md#setup)
+ - [langchain-multi-route-implementation](langchain-multi-route-implementation/README.md#setup)
 
 ## Demo
 
