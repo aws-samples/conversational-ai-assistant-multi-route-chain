@@ -1,6 +1,21 @@
-# Multi-route chain infrastructure
+# Langchain Multi-route Implementation
 
-This folder provides a step-by-step guide on creating a Conversational AI assistant that intelligently routes user inputs to the most relevant chatbot function, enhancing user interaction through precise and context-aware responses. It leverages AWS services such as [Amazon Bedrock](https://aws.amazon.com/bedrock) a fully managed service that offers a choice of high-performing foundation models (FMs) from leading AI companies like AI21 Labs, Anthropic, Cohere, Meta, Stability AI, and Amazon via a single API. For this project, we specifically employ the Anthropic Claude V2 model alongside [Langchain](https://python.langchain.com/docs/integrations/llms/bedrock) to deliver various capabilities:
+- [Langchain Multi-route Implementation](#langchain-multi-route-implementation)
+  - [Overview](#overview)
+  - [Use case workflow](#use-case-workflow)
+  - [Solution architecture](#solution-architecture)
+    - [Memory implementation](#memory-implementation)
+  - [Code struture](#code-struture)
+  - [Setup](#setup)
+    - [Pre-requisites](#pre-requisites)
+    - [Run CDK](#run-cdk)
+    - [Cleanup](#cleanup)
+    - [Other considerations](#other-considerations)
+
+
+## Overview
+
+This folder provides a step-by-step guide on Langchain multi-route implementation, leveraging the Anthropic Claude V2 model alongside [Langchain](https://python.langchain.com/docs/integrations/llms/bedrock) to deliver various capabilities:
 
 - **Querying Databases**: Demonstrates how to query an Athena database using Langchain's [SQLDatabaseChain](https://python.langchain.com/docs/use_cases/qa_structured/sql), enabling the AI to fetch and present data directly from structured databases in response to user queries.
 - **Semantic Searches**: Shows how to perform advanced semantic searches within an OpenSearch Vector index by integrating Langchain's [ConversationalRetrievalChain](https://api.python.langchain.com/en/latest/chains/langchain.chains.conversational_retrieval.base.ConversationalRetrievalChain.html) and [OpenSearch](https://python.langchain.com/docs/integrations/vectorstores/opensearch), enhancing the AI's ability to understand and retrieve relevant information based on the context of the conversation.
@@ -10,7 +25,7 @@ This folder provides a step-by-step guide on creating a Conversational AI assist
 
 A key aspect covered is the preservation of conversation context and chat history, which is crucial for the AI to understand the user's ongoing intent and provide responses that are coherent and contextually enriched. Please review the Memory implementation section for an overview.
 
-## Solution architecture
+## Use case workflow
 
 ![langchain_architecture](assets/langchain_solution_overview.png)
 
@@ -31,7 +46,7 @@ A key aspect covered is the preservation of conversation context and chat histor
     - SME/Expert Chain provides insights via the Bedrock Model.
 6.	Response Generation and Delivery: Responses from each Destination Chain are formulated into coherent insights by the LLM. These insights are then delivered to the user, completing the query cycle.
 
-## Technical architecture
+## Solution architecture
 
 ![Technical Architecture](assets/technical_architecture_langchain_implementation.png)
 
@@ -102,6 +117,10 @@ step to activate your virtualenv.
     ```
     cdk deploy -c sender=<the email verified in SES> -c recipient=<the email verified in SES> --all --require-approval never
     ```
+
+Once the CDK deployment has completed, there will be a Streamlit URL printed out alongside with deployment time in CDK Outputs.
+
+![CDK output](assets/cdk_output.png)
 
 ### Cleanup
 Run the following commands to destroy all Stacks. 
