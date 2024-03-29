@@ -82,9 +82,9 @@ def on_create(event):
                         "type": "knn_vector",
                         "dimension": 1536,
                         "method": {
-                            "engine": "nmslib",
-                            "space_type": "cosinesimil",
-                            "name": "hnsw"
+                            "engine": "faiss",
+                            "name": "hnsw",
+                            "parameters": {"ef_construction": 512, "m": 16},
                         }
                     }
                 }

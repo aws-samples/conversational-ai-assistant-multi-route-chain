@@ -118,7 +118,9 @@ step to activate your virtualenv.
     cdk deploy -c sender=<the email verified in SES> -c recipient=<the email verified in SES> --all --require-approval never
     ```
 
+Once the CDK deployment has completed, there will be a Streamlit URL printed out alongside with deployment time in CDK Outputs.
 
+![CDK output](assets/cdk_output.png)
 
 ### Cleanup
 Run the following commands to destroy all Stacks. 
