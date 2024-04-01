@@ -7,6 +7,7 @@ from aws_cdk import (
     Stack,
     Duration,
     CustomResource,
+    CfnParameter,
     aws_opensearchserverless as aws_opss,
     aws_lambda as _lambda,
     BundlingOptions,
@@ -466,9 +467,11 @@ class BedrockAgentStack(Stack):
         data_bucket.grant_read_write(action_1_lambda.role)
 
         # action 2 is the device action lambda 
-        sender = self.node.try_get_context('sender')
-        recipient = self.node.try_get_context('recipient')
-
+        sender = CfnParameter(self, "sender", type="String",
+                              description="The sender's email for SES email notification")
+        recipient = CfnParameter(self, "recipient", type="String",
+                              description="The recipient's email for SES email notification")
+        
         action_2_lambda = _lambda.Function(
             self, "DeviceActionLambda",
             runtime=_lambda.Runtime.PYTHON_3_11,
@@ -477,8 +480,8 @@ class BedrockAgentStack(Stack):
             handler='lambda_function.lambda_handler',
             timeout=cdk.Duration.seconds(300),
             environment={
-                'SENDER': sender,
-                'RECIPIENT': recipient
+                'SENDER': sender.value_as_string,
+                'RECIPIENT': recipient.value_as_string
             },
         )
         action_2_lambda.add_permission(
