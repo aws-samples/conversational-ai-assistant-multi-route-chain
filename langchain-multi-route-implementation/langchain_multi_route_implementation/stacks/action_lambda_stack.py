@@ -4,6 +4,7 @@ import aws_cdk as cdk
 from constructs import Construct
 from aws_cdk import (
     Stack,
+    CfnParameter,
     aws_iam as iam,
     aws_lambda as _lambda,
 )
@@ -17,8 +18,10 @@ class ActionLambdaStack(Stack):
     def __init__(self, scope: Construct, construct_id: str) -> None:
         super().__init__(scope, construct_id)
 
-        sender = self.node.try_get_context('sender')
-        recipient = self.node.try_get_context('recipient')
+        sender = CfnParameter(self, "sender", type="String",
+                              description="The sender's email for SES email notification")
+        recipient = CfnParameter(self, "recipient", type="String",
+                              description="The recipient's email for SES email notification")
 
         action_lambda = _lambda.Function(
             self, "SESActionLambda",
@@ -27,8 +30,8 @@ class ActionLambdaStack(Stack):
                 'langchain_multi_route_implementation/ses_action_lambda'),
             handler='lambda_function.lambda_handler',
             environment={
-                'SENDER': sender,
-                'RECIPIENT': recipient
+                'SENDER': sender.value_as_string,
+                'RECIPIENT': recipient.value_as_string
             },
         )
 

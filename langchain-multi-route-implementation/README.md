@@ -107,15 +107,18 @@ step to activate your virtualenv.
     ```
 7. CDK bootstrap 
    ```
-   cdk bootstrap -c sender=<the email verified in SES> -c recipient=<the email verified in SES> --all
+   cdk bootstrap
    ```
 8. At this point you can now synthesize the CloudFormation template for this code.
     ```
-    cdk synth -c sender=<the email verified in SES> -c recipient=<the email verified in SES> --all
+    cdk synth
     ```
 9.  Deploy the application
     ```
-    cdk deploy -c sender=<the email verified in SES> -c recipient=<the email verified in SES> --all --require-approval never
+    cdk deploy --all \
+    --require-approval never \
+    --parameters MultiRouteChainActionLambdaStack:sender=<The SES verified sender's email> \
+    --parameters MultiRouteChainActionLambdaStack:recipient=<The SES verified recipient's email>
     ```
 
 Once the CDK deployment has completed, there will be a Streamlit URL printed out alongside with deployment time in CDK Outputs.
@@ -125,7 +128,7 @@ Once the CDK deployment has completed, there will be a Streamlit URL printed out
 ### Cleanup
 Run the following commands to destroy all Stacks. 
 ```
-cdk destroy -c sender=<the email verified in SES> -c recipient=<the email verified in SES> --all
+cdk destroy --all
 ```
 Enter `y` upon the prompt to destroy each Stack.
 
