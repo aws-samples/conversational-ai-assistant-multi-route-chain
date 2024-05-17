@@ -53,7 +53,7 @@ You are an IoT Ops agent that handles the following activities:- looking up IoT 
 
 ### Pre-requisites
 1. The solution is only available in `us-east-1` and `us-west-2`. Please choose either of them to proceed.
-2. [Enable models in Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html): for this use case, you need to enable Anthropic Claude V2 and Titan Embeddings models 
+2. [Enable models in Amazon Bedrock](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html): for this use case, you need to enable Anthropic Claude V3 Sonnet and Titan Embeddings models 
 3. [SES setup (verify email)](https://docs.aws.amazon.com/ses/latest/dg/setting-up.html) `action_on_device` Lambda function implements the logic of sending email notificaiton. It is required to setup SES and verify and sender and recipient's emails beforehand. 
 4. [Get started with CDK](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html).
 5. [Install Docker](https://www.docker.com/get-started/). Because we are bundling Lambda functions when running CDK so we need to install Docker. Please see the blog post about [Building, bundling and deploying applications with the AWS CDK](https://aws.amazon.com/blogs/devops/building-apps-with-aws-cdk/)
