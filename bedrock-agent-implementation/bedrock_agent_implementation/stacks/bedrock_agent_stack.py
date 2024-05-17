@@ -22,7 +22,7 @@ ACCOUNT_ID = cdk.Aws.ACCOUNT_ID
 REGION = cdk.Aws.REGION
 
 BEDROCK_AGENT_NAME = "IotOpsAgent"
-FOUNDATION_MODEL = "anthropic.claude-v2:1"
+FOUNDATION_MODEL = "anthropic.claude-3-haiku-20240307-v1:0"
 KNOWLEDGE_BASE_NAME = "IotDeviceSpecs"
 EMBEDDING_MODEL = f"arn:aws:bedrock:{REGION}::foundation-model/amazon.titan-embed-text-v1"
 VECTOR_FIELD_NAME = "bedrock-agent-embeddings"
@@ -335,6 +335,7 @@ class BedrockAgentStack(Stack):
                 parameters={
                     "knowledgeBaseId": knowledgebase_id,
                     "name": KNOWLEDGE_DATA_SOURCE,
+                    "dataDeletionPolicy": "RETAIN",
                     "dataSourceConfiguration": {
                         "type": "S3",
                         "s3Configuration": {
@@ -378,26 +379,7 @@ class BedrockAgentStack(Stack):
                     "agentName": BEDROCK_AGENT_NAME,
                     "agentResourceRoleArn": bedrock_agent_role.role_arn,
                     "foundationModel": FOUNDATION_MODEL,
-                    "instruction": BEDROCK_AGENT_INSTRUCTION,
-                    "promptOverrideConfiguration": {
-                        "promptConfigurations" : [
-                            {
-                                "promptType": "PRE_PROCESSING",
-                                "promptCreationMode": "OVERRIDDEN",
-                                "promptState": "DISABLED",
-                                "basePromptTemplate": " ",
-                                "inferenceConfiguration": {
-                                    "temperature": 0,
-                                    "topP": 1,
-                                    "topK": 123,
-                                    "maximumLength": 2048,
-                                    "stopSequences": [
-                                        "Human",
-                                    ]
-                                }
-                            }
-                        ]
-                    }
+                    "instruction": BEDROCK_AGENT_INSTRUCTION
                 },
                 physical_resource_id=cr.PhysicalResourceId.from_response("agent.agentId"),
                 output_paths=["agent.agentId"]
